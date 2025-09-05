@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { CreateProducerDto } from "../dto/create-producer.dto";
 import { ProducersRepository } from "../repositories/producers.repository";
-import { LogMethod } from "src/common/decorators/log-method.decorator";
-import { CustomLoggerService } from "src/common/logger/custom-logger.service";
+import { LogMethod } from "../../../common/decorators/log-method.decorator";
+import { CustomLoggerService } from "../../../common/logger/custom-logger.service";
+import { maskDocument } from "../../../common/helpers/mask-document.helpers";
 
 @Injectable()
 export class CreateUseCase {
@@ -21,7 +22,7 @@ export class CreateUseCase {
                 operationId,
                 inputData: {
                     name: data.name,
-                    document: this.maskDocument(data.document)
+                    document: maskDocument(data.document)
                 }
             });
 
@@ -35,14 +36,14 @@ export class CreateUseCase {
             this.logger.log('Document type determined', {
                 operationId,
                 documentType: data.document_type,
-                maskedDocument: this.maskDocument(data.document)
+                maskedDocument: maskDocument(data.document)
             });
 
             this.logger.logBusinessEvent('producer_creation_started', {
                 operationId,
                 producerName: data.name,
                 documentType: data.document_type,
-                maskedDocument: this.maskDocument(data.document)
+                maskedDocument: maskDocument(data.document)
             });
 
             this.logger.debug('Creating producer entity in database', { operationId });
@@ -55,7 +56,7 @@ export class CreateUseCase {
                 producerId: producer.id,
                 producerName: producer.name,
                 documentType: producer.document_type,
-                maskedDocument: this.maskDocument(producer.document),
+                maskedDocument: maskDocument(producer.document),
                 duration
             });
 
@@ -82,7 +83,7 @@ export class CreateUseCase {
                 operationId,
                 inputData: {
                     name: data.name,
-                    maskedDocument: this.maskDocument(data.document),
+                    maskedDocument: maskDocument(data.document),
                     documentType: data.document_type
                 },
                 duration,
@@ -113,7 +114,7 @@ export class CreateUseCase {
             this.logger.debug('Document processed for type verification', {
                 originalLength: document?.length,
                 cleanLength: removeCharacters.length,
-                maskedDocument: this.maskDocument(removeCharacters)
+                maskedDocument: maskDocument(removeCharacters)
             });
 
             let documentType: string;
@@ -122,20 +123,20 @@ export class CreateUseCase {
                 documentType = 'pf';
                 this.logger.log('Document identified as PF (11 digits)', {
                     documentType,
-                    maskedDocument: this.maskDocument(removeCharacters)
+                    maskedDocument: maskDocument(removeCharacters)
                 });
             } else {
                 documentType = 'pj';
                 this.logger.log('Document identified as PJ (not 11 digits)', {
                     documentType,
                     cleanLength: removeCharacters.length,
-                    maskedDocument: this.maskDocument(removeCharacters)
+                    maskedDocument: maskDocument(removeCharacters)
                 });
             }
 
             this.logger.debug('Document type verification completed', {
                 documentType,
-                maskedDocument: this.maskDocument(removeCharacters)
+                maskedDocument: maskDocument(removeCharacters)
             });
 
             return documentType;
@@ -147,21 +148,6 @@ export class CreateUseCase {
                 errorMessage: error.message
             });
             throw error;
-        }
-    }
-
-    private maskDocument(document: string): string {
-        if (!document) return 'N/A';
-        
-        const cleanDoc = document.replace(/\D/g, '');
-        
-        if (cleanDoc.length === 11) {
-            return `${cleanDoc.substring(0, 3)}.***.***-${cleanDoc.substring(9)}`;
-        } else if (cleanDoc.length === 14) {
-            return `${cleanDoc.substring(0, 2)}.${cleanDoc.substring(2, 5)}.***/**${cleanDoc.substring(10, 12)}-${cleanDoc.substring(12)}`;
-        } else {
-            if (cleanDoc.length <= 4) return cleanDoc.replace(/./g, '*');
-            return `${cleanDoc.substring(0, 2)}***${cleanDoc.substring(cleanDoc.length - 2)}`;
         }
     }
 }

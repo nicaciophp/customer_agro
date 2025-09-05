@@ -8,8 +8,8 @@ import {
   Min,
   Validate 
 } from "class-validator";
-import { IsAreaValid } from "src/common/decorators/area-validation.decorator";
-import { AreaValidator } from "src/common/validators/area.validator";
+import { IsAreaValid } from "../../../common/decorators/area-validation.decorator";
+import { AreaValidator } from "../../../common/validators/area.validator";
 
 export class CreateFarmDto {
   @ApiProperty({ example: 'Fazenda São João', description: 'Nome da propriedade' })

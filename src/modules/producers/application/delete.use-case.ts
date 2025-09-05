@@ -1,9 +1,10 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ProducersRepository } from "../repositories/producers.repository";
-import { FarmRepository } from "src/modules/farms/repositories/farm.repository";
-import { CustomLoggerService } from "src/common/logger/custom-logger.service";
-import { LogMethod } from "src/common/decorators/log-method.decorator";
-import { PlantedCropsRepository } from "src/modules/planted_crops/repositories/planted-crops.repository";
+import { FarmRepository } from "../../../modules/farms/repositories/farm.repository";
+import { CustomLoggerService } from "../../../common/logger/custom-logger.service";
+import { LogMethod } from "../../../common/decorators/log-method.decorator";
+import { PlantedCropsRepository } from "../../../modules/planted_crops/repositories/planted-crops.repository";
+import { maskDocument } from "../../../common/helpers/mask-document.helpers";
 
 @Injectable()
 export class DeleteUseCase {
@@ -35,7 +36,7 @@ export class DeleteUseCase {
                 operationId,
                 producerId: id,
                 producerName: producer.name,
-                producerDocument: this.maskDocument(producer.document),
+                producerDocument: maskDocument(producer.document),
                 relatedEntities: deletionStats
             });
 
@@ -47,7 +48,7 @@ export class DeleteUseCase {
                 operationId,
                 producerId: id,
                 producerName: producer.name,
-                producerDocument: this.maskDocument(producer.document),
+                producerDocument: maskDocument(producer.document),
                 deletedEntities: deletionStats,
                 duration
             });
@@ -121,7 +122,7 @@ export class DeleteUseCase {
             operationId,
             producerId: id,
             producerName: producer.name,
-            producerDocument: this.maskDocument(producer.document),
+            producerDocument: maskDocument(producer.document),
             farmsCount: producer.farms?.length || 0
         });
 
@@ -247,21 +248,6 @@ export class DeleteUseCase {
 
         if (!producerDeletionResult.success) {
             throw new Error('Failed to delete producer after cascade deletion');
-        }
-    }
-
-    private maskDocument(document: string): string {
-        if (!document) return 'N/A';
-        
-        const cleanDoc = document.replace(/\D/g, '');
-        
-        if (cleanDoc.length === 11) {
-            return `${cleanDoc.substring(0, 3)}.***.***-${cleanDoc.substring(9)}`;
-        } else if (cleanDoc.length === 14) {
-            return `${cleanDoc.substring(0, 2)}.${cleanDoc.substring(2, 5)}.***/**${cleanDoc.substring(10, 12)}-${cleanDoc.substring(12)}`;
-        } else {
-            if (cleanDoc.length <= 4) return cleanDoc.replace(/./g, '*');
-            return `${cleanDoc.substring(0, 2)}***${cleanDoc.substring(cleanDoc.length - 2)}`;
         }
     }
 }

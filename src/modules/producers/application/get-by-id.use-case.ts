@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ProducersRepository } from "../repositories/producers.repository";
-import { CustomLoggerService } from "src/common/logger/custom-logger.service";
-import { LogMethod } from "src/common/decorators/log-method.decorator";
+import { CustomLoggerService } from "../../../common/logger/custom-logger.service";
+import { LogMethod } from "../../../common/decorators/log-method.decorator";
 
 @Injectable()
 export class GetByIdUseCase {

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { LogMethod } from "src/common/decorators/log-method.decorator";
-import { CustomLoggerService } from "src/common/logger/custom-logger.service";
+import { LogMethod } from "../../../common/decorators/log-method.decorator";
+import { CustomLoggerService } from "../../../common/logger/custom-logger.service";
 import { FarmRepository } from "../repositories/farm.repository";
 
 @Injectable()

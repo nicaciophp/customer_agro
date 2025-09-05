@@ -1,5 +1,5 @@
-import { PlantedCrop } from "src/modules/planted_crops/entities/planted-crops.entity";
-import { Producer } from "src/modules/producers/entities/producer.entity";
+import { PlantedCrop } from "../../../modules/planted_crops/entities/planted-crops.entity";
+import { Producer } from "../../../modules/producers/entities/producer.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

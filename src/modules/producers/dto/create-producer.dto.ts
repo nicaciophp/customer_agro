@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString, Length } from "class-validator";
-import { IsDocument } from "src/common/decorators/is-document.decorato";
+import { IsDocument } from "../../../common/decorators/is-document.decorato";
 
 export class CreateProducerDto {
     @ApiProperty({ example: 'Jhon Doe', description: 'Nome do produtor' })

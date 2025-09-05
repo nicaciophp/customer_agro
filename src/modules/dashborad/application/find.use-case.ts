@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { FarmRepository } from 'src/modules/farms/repositories/farm.repository';
-import { PlantedCropsRepository } from 'src/modules/planted_crops/repositories/planted-crops.repository';
-import { ProducersRepository } from 'src/modules/producers/repositories/producers.repository';
+import { FarmRepository } from '../../../modules/farms/repositories/farm.repository';
+import { PlantedCropsRepository } from '../../../modules/planted_crops/repositories/planted-crops.repository';
+import { ProducersRepository } from '../../../modules/producers/repositories/producers.repository';
 
 export interface DashboardData {
     totalFarms: number;

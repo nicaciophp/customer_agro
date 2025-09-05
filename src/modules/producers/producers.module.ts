@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ProducersRepository } from './repositories/producers.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FarmRepository } from 'src/modules/farms/repositories/farm.repository';
-import { PlantedCrop } from 'src/modules/planted_crops/entities/planted-crops.entity';
+import { FarmRepository } from '../../modules/farms/repositories/farm.repository';
+import { PlantedCrop } from '../../modules/planted_crops/entities/planted-crops.entity';
 import { Producer } from './entities/producer.entity';
 import { Farm } from '../farms/entites/farm.entity';
 import { ProducersController } from './adapters/producers.controller';

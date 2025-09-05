@@ -1,4 +1,4 @@
-import { Farm } from "src/modules/farms/entites/farm.entity";
+import { Farm } from "../../../modules/farms/entites/farm.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

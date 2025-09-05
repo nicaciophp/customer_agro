@@ -1,7 +1,7 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
-import { BaseRepository } from "src/common/base/base.respository";
+import { BaseRepository } from "../../../common/base/base.respository";
 import { Farm } from "../entites/farm.entity";
 
 @Injectable()

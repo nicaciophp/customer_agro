@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CustomLoggerService } from "src/common/logger/custom-logger.service";
+import { CustomLoggerService } from "../../../common/logger/custom-logger.service";
 import { PlantedCropsRepository } from "../repositories/planted-crops.repository";
 import { UpdatePlantedCropDto } from "../dto/update-planted_crop.dto";
 
