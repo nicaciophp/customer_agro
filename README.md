@@ -86,6 +86,7 @@ $ docker run -p 3001:3000 \
 
 After running with Docker Compose:
 - **Application**: http://localhost:3001
+- **API Documentation**: http://localhost:3001/docs
 - **Database**: localhost:5432 (accessible from host machine)
 
 ## Run tests
