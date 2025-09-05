@@ -44,14 +44,55 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Docker Setup
+
+### Using Docker Compose (Recommended)
+
+```bash
+# Build and start all services
+$ docker-compose up --build
+
+# Run in background
+$ docker-compose up -d
+
+# Stop all services
+$ docker-compose down
+
+# View logs
+$ docker-compose logs -f
+```
+
+### Environment Variables for Docker
+
+When running with Docker Compose, use the service name as the database host instead of `localhost` or `127.0.0.1`.
+
+### Using Dockerfile directly
+
+```bash
+# Build the image
+$ docker build -t nestjs-app .
+
+# Run the container with environment variables
+$ docker run -p 3001:3000 \
+  -e DB_HOST=your_db_host \
+  -e DB_PORT=5432 \
+  -e DB_USERNAME=postgres \
+  -e DB_PASSWORD=postgres \
+  -e DB_NAME=postgres \
+  nestjs-app
+```
+
+### Accessing the Application
+
+After running with Docker Compose:
+- **Application**: http://localhost:3001
+- **Database**: localhost:5432 (accessible from host machine)
+
 ## Run tests
 
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
@@ -60,15 +101,6 @@ $ npm run test:cov
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
 ## Resources
 
